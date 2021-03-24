@@ -1,3 +1,22 @@
+body {
+    font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.background-image {
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.4;
+    background-size: cover;
+}
+
+.table td, .table th {
+    vertical-align: super;
+}
+
 .title {
     text-align: center;
 }
@@ -5,3 +24,40 @@
 .leader-board {
     text-align: center;
 }
+
+.logo {
+    width: 30%;
+    margin-top: 5vh;
+}
+
+.rank-one {
+    width: 25px;
+    margin: auto;
+    background-color: yellow;
+    border-radius: 30%;
+}
+
+.rank-two {
+    width: 25px;
+    margin: auto;
+    background-color: silver;
+    border-radius: 30%;
+}
+
+.rank-three {
+    width: 25px;
+    margin: auto;
+    background-color: #cd7f32;
+    border-radius: 30%;
+}
+
+
+@media (max-width: 784px) {
+    .logo {
+        width: 60%;
+    }
+    .background-image {
+        width: auto;
+    }
+}
+

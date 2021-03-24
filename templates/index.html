@@ -6,11 +6,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static',filename='/css/index.css') }}">
+
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
+    <!-- <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'> -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="title">
-    <h1>Leader board</h1>
-    <p>This index page is boring</p>
+    <img class="logo" src="../static/img/logo21_large.svg" alt="logo pic"/>
+    <br>
+    <br>
+    <h1>ALGOTHON</h1>
+    <br>
+    <h3>Leader board</h3>
+    <br>
 </div>
 <div class="leader-board table-responsive">
     <table class="table">
@@ -26,7 +39,29 @@
         {%for i in range(len)%}
 
         <tr>
-            <td>{{i + 1}}</td>
+            {%if i + 1 == 1 %}
+            <td>
+                <div class="rank-one">
+                    {{i + 1}}
+                </div>
+            </td>
+            {%elif i + 1 == 2 %}
+            <td>
+                <div class="rank-two">
+                    {{i + 1}}
+                </div>
+            </td>
+            {%elif i + 1 == 3 %}
+            <td>
+                <div class="rank-three">
+                    {{i + 1}}
+                </div>
+            </td>
+            {% else %}
+            <td>
+                {{i + 1}}
+            </td>
+            {% endif %}
             <td>{{top_50_teams.loc[i, "team"]}}</td>
             <td>{{top_50_teams.loc[i, "public"]}}</td>
             <td>
@@ -62,7 +97,7 @@
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
