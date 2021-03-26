@@ -33,7 +33,7 @@ body {
 .rank-one {
     width: 25px;
     margin: auto;
-    background-color: yellow;
+    background-color: rgb(238, 216, 22);
     border-radius: 30%;
 }
 
