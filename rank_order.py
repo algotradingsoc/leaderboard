@@ -1,6 +1,7 @@
 import pandas as pd
 from config import *
 import math
+import numpy as np
 
 pd.options.display.max_columns = None
 pd.options.display.max_rows = None
@@ -12,14 +13,16 @@ def rank_order():
 
     for challenge in PUBLIC_CHALLENGES:
         if challenge == "ESG" or challenge == "Data Cleaning":
+            df[f"{challenge} - public"] = df[f"{challenge} - public"].replace(np.nan, 1000000).apply(lambda x: round(x))
             df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=True).apply(lambda x: round(x))
         else:
+            df[f"{challenge} - public"] = df[f"{challenge} - public"].replace(np.nan, 0).apply(lambda x: round(x))
             df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=False).apply(lambda x: round(x))
 
-        df[f"{challenge} - rank_score"] = df[f"{challenge} - rank"].apply(lambda x: math.log(x**2))
+        df[f"{challenge} - rank_score"] = df[f"{challenge} - rank"].apply(lambda x: round(math.log(x**2), 2))
 
-    df["Execution - rank"] = df["Execution"].rank().apply(lambda x: round(x))
-    df["Execution - rank_score"] = df["Execution - rank"].apply(lambda x: math.log(x**2))
+    df["Execution - rank"] = df["Execution"].rank(ascending=False).apply(lambda x: round(x))
+    df["Execution - rank_score"] = df["Execution - rank"].apply(lambda x: round(math.log(x**2), 2))
 
     for i in range(len(df)):
         curr_row = df.loc[i]
@@ -35,8 +38,9 @@ def rank_order():
     public_challenges = list(map(lambda x: f"{x} - public", PUBLIC_CHALLENGES))
     public_challenges += ["Execution", "team", "public"]
     challenges_ranked = list(map(lambda x: f"{x} - rank", CHALLENGES))
-    public_challenges += challenges_ranked
-    return df[:50][public_challenges]
+    adjusted_ranked = list(map(lambda x: f"{x} - rank_score", CHALLENGES))
+    public_challenges += challenges_ranked + adjusted_ranked
+    return df[public_challenges]
 
 
 # def create_csv():
