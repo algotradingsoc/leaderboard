@@ -91,35 +91,24 @@
                         {%if 'Execution' == challenge %}
                         <div class="row">
                             <div class="col-sm-3">{{challenge}}</div>
-                            {% if top_50_teams.loc[i, challenge + " - public"] == 0 %}
+                            {% if top_50_teams.loc[i, challenge] == -1 %}
                             <div class="col-sm-3">Metric: N/A</div>
-                            <div class="col-sm-3">Rank: 50</div>
                             {% else %}
                             <div class="col-sm-3">Metric: {{top_50_teams.loc[i, challenge]}}</div>
-                            {% if top_50_teams.loc[i, challenge + " - rank"] > 50 %}
-                            <div class="col-sm-3">Rank: 50</div>
-                            {% else %}
+                            {% endif %}
                             <div class="col-sm-3">Rank: {{top_50_teams.loc[i, challenge + " - rank"]}}</div>
-                            {% endif %}
-                            {% endif %}
                             <div class="col-sm-3">Adj Rank: {{top_50_teams.loc[i, challenge + " - rank_score"]}}
                             </div>
                         </div>
                         {% else %}
                         <div class="row">
                             <div class="col-sm-3">{{challenge}}</div>
-                            {% if top_50_teams.loc[i, challenge + " - public"] == 1000000 or top_50_teams.loc[i,
-                            challenge + " - public"] == 0 %}
+                            {% if top_50_teams.loc[i, challenge + " - public"] == -1 %}
                             <div class="col-sm-3">Metric: N/A</div>
-                            <div class="col-sm-3">Rank: 50</div>
                             {% else %}
                             <div class="col-sm-3">Metric: {{top_50_teams.loc[i, challenge + " - public"]}}</div>
-                            {% if top_50_teams.loc[i, challenge + " - rank"] > 50 %}
-                            <div class="col-sm-3">Rank: 50</div>
-                            {% else %}
+                            {% endif %}
                             <div class="col-sm-3">Rank: {{top_50_teams.loc[i, challenge + " - rank"]}}</div>
-                            {% endif %}
-                            {% endif %}
                             <div class="col-sm-3">Adj Rank: {{top_50_teams.loc[i, challenge + " - rank_score"]}}
                             </div>
                         </div>
