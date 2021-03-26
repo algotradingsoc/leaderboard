@@ -21,7 +21,7 @@ def rank_order():
 
         df[f"{challenge} - rank_score"] = df[f"{challenge} - rank"].apply(lambda x: round(math.log(x**2), 2))
 
-    df["Execution - rank"] = df["Execution"].rank(ascending=False).apply(lambda x: round(x))
+    df["Execution - rank"] = df["Execution"].rank(ascending=True).apply(lambda x: round(x))
     df["Execution - rank_score"] = df["Execution - rank"].apply(lambda x: round(math.log(x**2), 2))
 
     for i in range(len(df)):
