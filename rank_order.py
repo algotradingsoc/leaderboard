@@ -13,28 +13,33 @@ def rank_order():
 
     for challenge in PUBLIC_CHALLENGES:
         if challenge == "ESG" or challenge == "Data Cleaning":
-            df[f"{challenge} - public"] = df[f"{challenge} - public"].replace(np.nan, 1000000).apply(lambda x: round(x))
-            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=True).apply(lambda x: round(x))
+            df[f"{challenge} - public"] = df[f"{challenge} - public"].apply(lambda x: np.round(x))
+            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=True).apply(lambda x: np.round(x, 2) if not np.isnan(x) else 50)
         else:
-            df[f"{challenge} - public"] = df[f"{challenge} - public"].replace(np.nan, 0).apply(lambda x: round(x))
-            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=False).apply(lambda x: round(x))
+            df[f"{challenge} - public"] = df[f"{challenge} - public"].apply(lambda x: np.round(x))
+            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=False).apply(lambda x: np.round(x, 2) if not np.isnan(x) else 50)
 
-        df[f"{challenge} - rank_score"] = df[f"{challenge} - rank"].apply(lambda x: round(math.log(x**2), 2))
+        df[f"{challenge} - rank_score"] = df[f"{challenge} - rank"].apply(lambda x: np.round(math.log(x**2), 2) if x <= 50 else np.round(math.log(50**2), 2))
 
-    df["Execution - rank"] = df["Execution"].rank(ascending=True).apply(lambda x: round(x))
-    df["Execution - rank_score"] = df["Execution - rank"].apply(lambda x: round(math.log(x**2), 2))
+    df["Execution"] = df["Execution"].apply(lambda x: np.round(x))
+    df["Execution - rank"] = df["Execution"].rank(ascending=False).apply(lambda x: np.round(x, 2) if not np.isnan(x) else 50)
+    df["Execution - rank_score"] = df["Execution - rank"].apply(lambda x: np.round(math.log(x**2), 2) if x <= 50 else np.round(math.log(50**2), 2))
+
+    print(df[df["Execution - rank"] >= 50]["Execution - rank_score"])
+    print(math.log(50**2, 2))
 
     for i in range(len(df)):
         curr_row = df.loc[i]
         total_rank_scores = 0
         for challenge in CHALLENGES:
             total_rank_scores += curr_row[f"{challenge} - rank_score"]
-        total_rank_scores = round(total_rank_scores, 2)
+        total_rank_scores = np.round(total_rank_scores, 2)
         total_public_scores.append(total_rank_scores)
 
     df['public'] = total_public_scores
     df.sort_values('public', ascending=True, inplace=True)
     df.reset_index(drop=True, inplace=True)
+    df = df.replace(np.nan, -1)
     public_challenges = list(map(lambda x: f"{x} - public", PUBLIC_CHALLENGES))
     public_challenges += ["Execution", "team", "public"]
     challenges_ranked = list(map(lambda x: f"{x} - rank", CHALLENGES))
