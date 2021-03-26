@@ -14,15 +14,18 @@ def rank_order():
     for challenge in PUBLIC_CHALLENGES:
         if challenge == "ESG" or challenge == "Data Cleaning":
             df[f"{challenge} - public"] = df[f"{challenge} - public"].replace(np.nan, 1000000).apply(lambda x: round(x))
-            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=True).apply(lambda x: round(x))
+            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=True).apply(lambda x: round(x) if x != 0 else 50)
         else:
             df[f"{challenge} - public"] = df[f"{challenge} - public"].replace(np.nan, 0).apply(lambda x: round(x))
-            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=False).apply(lambda x: round(x))
+            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=False).apply(lambda x: round(x) if x != 0 else 50)
 
-        df[f"{challenge} - rank_score"] = df[f"{challenge} - rank"].apply(lambda x: round(math.log(x**2), 2))
+        df[f"{challenge} - rank_score"] = df[f"{challenge} - rank"].apply(lambda x: round(math.log(x**2), 2) if x <= 50 else round(math.log(50**2), 2))
 
     df["Execution - rank"] = df["Execution"].rank(ascending=False).apply(lambda x: round(x))
-    df["Execution - rank_score"] = df["Execution - rank"].apply(lambda x: round(math.log(x**2), 2))
+    df["Execution - rank_score"] = df["Execution - rank"].apply(lambda x: round(math.log(x**2), 2) if x <= 50 else round(math.log(50**2), 2))
+
+    print(df[df["Execution - rank"] >= 50]["Execution - rank_score"])
+    print(math.log(50**2, 2))
 
     for i in range(len(df)):
         curr_row = df.loc[i]
