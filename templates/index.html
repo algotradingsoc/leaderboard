@@ -85,13 +85,15 @@
                         {%for challenge in challenges%}
                         {%if 'Execution' == challenge %}
                         <div class="row">
-                            <div class="col-sm-6">{{challenge}}</div>
-                            <div class="col-sm-6">{{top_50_teams.loc[i, challenge]}}</div>
+                            <div class="col-sm-4">{{challenge}}</div>
+                            <div class="col-sm-4">Score: {{top_50_teams.loc[i, challenge]}}</div>
+                            <div class="col-sm-4">Rank: {{top_50_teams.loc[i, challenge + " - rank"]}}</div>
                         </div>
                         {% else %}
                         <div class="row">
-                            <div class="col-sm-6">{{challenge}}</div>
-                            <div class="col-sm-6">{{top_50_teams.loc[i, challenge + " - public"]}}</div>
+                            <div class="col-sm-4">{{challenge}}</div>
+                            <div class="col-sm-4">Score: {{top_50_teams.loc[i, challenge + " - public"]}}</div>
+                            <div class="col-sm-4">Rank: {{top_50_teams.loc[i, challenge + " - rank"]}}</div>
                         </div>
                         {% endif %}
                         {% endfor %}
