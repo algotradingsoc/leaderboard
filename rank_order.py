@@ -14,15 +14,15 @@ def rank_order():
     for challenge in PUBLIC_CHALLENGES:
         if challenge == "ESG" or challenge == "Data Cleaning":
             df[f"{challenge} - public"] = df[f"{challenge} - public"].apply(lambda x: np.round(x, 3))
-            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=True).apply(lambda x: x if not np.isnan(x) else 50)
+            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=True).apply(lambda x: int(x) if not np.isnan(x) else 50)
         else:
             df[f"{challenge} - public"] = df[f"{challenge} - public"].apply(lambda x: np.round(x, 4))
-            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=False).apply(lambda x: x if not np.isnan(x) else 50)
+            df[f"{challenge} - rank"] = df[f"{challenge} - public"].rank(ascending=False).apply(lambda x: int(x) if not np.isnan(x) else 50)
 
         df[f"{challenge} - rank_score"] = df[f"{challenge} - rank"].apply(lambda x: np.round(math.log(x**2), 3) if x <= 50 else np.round(math.log(50**2), 3))
 
     df["Execution"] = df["Execution"].apply(lambda x: np.round(x))
-    df["Execution - rank"] = df["Execution"].rank(ascending=False).apply(lambda x: x if not np.isnan(x) else 50)
+    df["Execution - rank"] = df["Execution"].rank(ascending=False).apply(lambda x: int(x) if not np.isnan(x) else 50)
     df["Execution - rank_score"] = df["Execution - rank"].apply(lambda x: np.round(math.log(x**2), 3) if x <= 50 else np.round(math.log(50**2), 3))
 
     print(df[df["Execution - rank"] >= 50]["Execution - rank_score"])
