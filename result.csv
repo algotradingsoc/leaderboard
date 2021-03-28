@@ -1,7 +1,7 @@
 ,team,ML Strategy - public,ML Strategy - private,Prediction - public,Prediction - private,ESG - public,ESG - private,Long Short Sector - public,Long Short Sector - private,Data Cleaning - public,Data Cleaning - private,Dashboard - public,Dashboard - private,Execution
 1,NegativeBrainCells,,,,,,,,,1265527.571,937504.814,,,
 2,algodons,,,,,,,,,93711.694,1793138.997,,,
-3,EspressoMartini,-inf,-inf,0.136123623,-0.005263374,0.13039217787392,0.134406870526926,2.1572,1.3594,31371.442,107088.073,,,0
+3,EspressoMartini,-inf,-inf,0.136123623,-0.005263374,0.130392177,0.1344068705,2.1572,1.3594,31371.442,107088.073,,,0
 4,TeamTBA,-0.089297242999987,-0.032049276446511,-0.001831015097372,0.05365662838037,inf,inf,1.0103,0.9608,87930.73,1730714.356,6,6,1
 5,SAR,,,0.075224402,0.021859724,,,0.743,0.5903,63216.81,192756.485,,,
 6,zzdl,-0.005294,0.109135,0.010292492,0.05976635,0.170266775627667,0.174545544857989,1,1,31427.547,1704868.38,11,11,
