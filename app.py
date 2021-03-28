@@ -10,6 +10,7 @@ app = Flask(__name__)
 def leader_board():
     top_50_teams = rank_order()
     print(CHALLENGES)
+    print(top_50_teams.loc[0, f"{CHALLENGES[0]} - rank_score(private)"])
     return render_template("index.html", len=len(top_50_teams), top_50_teams=top_50_teams, challenges=CHALLENGES)
 
 

@@ -10,6 +10,7 @@ pd.options.display.max_rows = None
 def rank_order():
     df = pd.read_csv(CSV_FILE_NAME)
     total_public_scores = []
+    total_private_scores = []
 
     for challenge in PUBLIC_CHALLENGES:
         if challenge == "ESG" or challenge == "Data Cleaning":
@@ -25,8 +26,19 @@ def rank_order():
     df["Execution - rank"] = df["Execution"].rank(ascending=False).apply(lambda x: int(x) if not np.isnan(x) else 50)
     df["Execution - rank_score"] = df["Execution - rank"].apply(lambda x: np.round(math.log(x**2), 3) if x <= 50 else np.round(math.log(50**2), 3))
 
-    print(df[df["Execution - rank"] >= 50]["Execution - rank_score"])
-    print(math.log(50**2, 4))
+    for challenge in PUBLIC_CHALLENGES:
+        if challenge == "ESG" or challenge == "Data Cleaning":
+            df[f"{challenge} - private"] = df[f"{challenge} - private"].apply(lambda x: np.round(x, 7))
+            df[f"{challenge} - rank(private)"] = df[f"{challenge} - private"].rank(ascending=True).apply(lambda x: int(x) if not np.isnan(x) else 50)
+        else:
+            df[f"{challenge} - private"] = df[f"{challenge} - private"].apply(lambda x: np.round(x, 7))
+            df[f"{challenge} - rank(private)"] = df[f"{challenge} - private"].rank(ascending=False).apply(lambda x: int(x) if not np.isnan(x) else 50)
+
+        df[f"{challenge} - rank_score(private)"] = df[f"{challenge} - rank(private)"].apply(lambda x: np.round(math.log(x**2), 3) if x <= 50 else np.round(math.log(50**2), 3))
+
+    df["Execution"] = df["Execution"].apply(lambda x: np.round(x))
+    df["Execution - rank(private)"] = df["Execution"].rank(ascending=False).apply(lambda x: int(x) if not np.isnan(x) else 50)
+    df["Execution - rank_score(private)"] = df["Execution - rank(private)"].apply(lambda x: np.round(math.log(x**2), 3) if x <= 50 else np.round(math.log(50**2), 3))
 
     for i in range(len(df)):
         curr_row = df.loc[i]
@@ -37,14 +49,26 @@ def rank_order():
         total_public_scores.append(total_rank_scores)
 
     df['public'] = total_public_scores
-    df.sort_values('public', ascending=True, inplace=True)
+
+    for i in range(len(df)):
+        curr_row = df.loc[i]
+        total_rank_scores = 0
+        for challenge in CHALLENGES:
+            total_rank_scores += curr_row[f"{challenge} - rank_score(private)"]
+        total_rank_scores = np.round(total_rank_scores, 3)
+        total_private_scores.append(total_rank_scores)
+
+    df['private'] = total_private_scores
+    df.sort_values('private', ascending=True, inplace=True)
     df.reset_index(drop=True, inplace=True)
     df = df.replace(np.nan, -1)
     public_challenges = list(map(lambda x: f"{x} - public", PUBLIC_CHALLENGES))
-    public_challenges += ["Execution", "team", "public"]
+    public_challenges += ["Execution", "team", "public", "private"]
     challenges_ranked = list(map(lambda x: f"{x} - rank", CHALLENGES))
     adjusted_ranked = list(map(lambda x: f"{x} - rank_score", CHALLENGES))
-    public_challenges += challenges_ranked + adjusted_ranked
+    private_challenges_ranked = list(map(lambda x: f"{x} - rank(private)", CHALLENGES))
+    private_adjusted_ranked = list(map(lambda x: f"{x} - rank_score(private)", CHALLENGES))
+    public_challenges += challenges_ranked + adjusted_ranked + private_challenges_ranked + private_adjusted_ranked
     return df[public_challenges]
 
 
