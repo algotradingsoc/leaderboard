@@ -22,7 +22,7 @@ def rank_order():
 
         df[f"{challenge} - rank_score"] = df[f"{challenge} - rank"].apply(lambda x: np.round(math.log(x**2), 3) if x <= 50 else np.round(math.log(50**2), 3))
 
-    df["Execution"] = df["Execution"].apply(lambda x: np.round(x,5))
+    df["Execution"] = df["Execution"].apply(lambda x: x)
     df["Execution - rank"] = df["Execution"].rank(ascending=True).apply(lambda x: int(x) if not np.isnan(x) else 50)
     df["Execution - rank_score"] = df["Execution - rank"].apply(lambda x: np.round(math.log(x**2), 3) if x <= 50 else np.round(math.log(50**2), 3))
 
@@ -36,7 +36,7 @@ def rank_order():
 
         df[f"{challenge} - rank_score(private)"] = df[f"{challenge} - rank(private)"].apply(lambda x: np.round(math.log(x**2), 3) if x <= 50 else np.round(math.log(50**2), 3))
 
-    df["Execution"] = df["Execution"].apply(lambda x: np.round(x, 5))
+    df["Execution"] = df["Execution"].apply(lambda x: x)
     df["Execution - rank(private)"] = df["Execution"].rank(ascending=True).apply(lambda x: int(x) if not np.isnan(x) else 50)
     df["Execution - rank_score(private)"] = df["Execution - rank(private)"].apply(lambda x: np.round(math.log(x**2), 3) if x <= 50 else np.round(math.log(50**2), 3))
 
