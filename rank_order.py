@@ -66,9 +66,10 @@ def rank_order():
     public_challenges += ["Execution", "team", "public", "private"]
     challenges_ranked = list(map(lambda x: f"{x} - rank", CHALLENGES))
     adjusted_ranked = list(map(lambda x: f"{x} - rank_score", CHALLENGES))
+    private_challenges = list(map(lambda x: f"{x} - private", PUBLIC_CHALLENGES))
     private_challenges_ranked = list(map(lambda x: f"{x} - rank(private)", CHALLENGES))
     private_adjusted_ranked = list(map(lambda x: f"{x} - rank_score(private)", CHALLENGES))
-    public_challenges += challenges_ranked + adjusted_ranked + private_challenges_ranked + private_adjusted_ranked
+    public_challenges += challenges_ranked + adjusted_ranked + private_challenges + private_challenges_ranked + private_adjusted_ranked
     return df[public_challenges]
 
 
