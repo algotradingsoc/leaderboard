@@ -92,35 +92,59 @@
                         {%for challenge in challenges%}
                         {%if 'Execution' == challenge %}
                         <div class="row">
-                            <div class="col-sm-2">{{challenge}}</div>
-                            {% if top_50_teams.loc[i, challenge] == -1 %}
-                            <div class="col-sm-2">Metric: N/A</div>
-                            {% else %}
-                            <div class="col-sm-2">Metric: {{top_50_teams.loc[i, challenge]}}</div>
-                            {% endif %}
-                            <div class="col-sm-2">Pub Rank: {{top_50_teams.loc[i, challenge + " - rank"]}}</div>
-                            <div class="col-sm-2">Pub Adj Rank: {{top_50_teams.loc[i, challenge + " - rank_score"]}}</div>
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-2">Priv Rank: {{top_50_teams.loc[i, challenge + " - rank(private)"]}}</div>
-                            <div class="col-sm-2">Priv Adj Rank: {{top_50_teams.loc[i, challenge + " - rank_score(private)"]}}</div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-3">{{challenge}}</div>
+                                    {% if top_50_teams.loc[i, challenge] == -1 %}
+                                    <div class="col-sm-3">Metric: N/A</div>
+                                    {% else %}
+                                    <div class="col-sm-3">Metric: {{top_50_teams.loc[i, challenge]}}</div>
+                                    {% endif %}
+                                    <div class="col-sm-3">Pub Rank: {{top_50_teams.loc[i, challenge + " - rank"]}}</div>
+                                    <div class="col-sm-3">Pub Adj Rank: {{top_50_teams.loc[i, challenge + " - rank_score"]}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-4">Priv Rank: {{top_50_teams.loc[i, challenge + " - rank(private)"]}}
+                                    </div>
+                                    <div class="col-sm-4">Priv Adj Rank: {{top_50_teams.loc[i, challenge + " - rank_score(private)"]}}
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                         {% else %}
                         <div class="row">
-                            <div class="col-sm-2">{{challenge}}</div>
-                            {% if top_50_teams.loc[i, challenge + " - public"] == -1 %}
-                            <div class="col-sm-2">Metric: N/A</div>
-                            {% else %}
-                            <div class="col-sm-2">Metric: {{top_50_teams.loc[i, challenge + " - public"]}}</div>
-                            {% endif %}
-                            <div class="col-sm-2">Pub Rank: {{top_50_teams.loc[i, challenge + " - rank"]}}</div>
-                            <div class="col-sm-2">Pub Adj Rank: {{top_50_teams.loc[i, challenge + " - rank_score"]}}</div>
-                            {% if top_50_teams.loc[i, challenge + " - private"] == -1 %}
-                            <div class="col-sm-2">Private Metric: N/A</div>
-                            {% else %}
-                            <div class="col-sm-2">Private Metric: {{top_50_teams.loc[i, challenge + " - private"]}}</div>
-                            {% endif %}
-                            <div class="col-sm-2">Priv Rank: {{top_50_teams.loc[i, challenge + " - rank(private)"]}}</div>
-                            <div class="col-sm-2">Priv Adj Rank: {{top_50_teams.loc[i, challenge + " - rank_score(private)"]}}</div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-3">{{challenge}}</div>
+                                    {% if top_50_teams.loc[i, challenge + " - public"] == -1 %}
+                                    <div class="col-sm-3">Metric: N/A</div>
+                                    {% else %}
+                                    <div class="col-sm-3">Metric: {{top_50_teams.loc[i, challenge + " - public"]}}</div>
+                                    {% endif %}
+                                    <div class="col-sm-3">Pub Rank: {{top_50_teams.loc[i, challenge + " - rank"]}}</div>
+                                    <div class="col-sm-3">Pub Adj Rank: {{top_50_teams.loc[i, challenge + " - rank_score"]}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    {% if top_50_teams.loc[i, challenge + " - private"] == -1 %}
+                                    <div class="col-sm-4">Private Metric: N/A</div>
+                                    {% else %}
+                                    <div class="col-sm-4">Private Metric: {{top_50_teams.loc[i, challenge + " - private"]}}
+                                    </div>
+                                    {% endif %}
+                                    <div class="col-sm-4">Priv Rank: {{top_50_teams.loc[i, challenge + " - rank(private)"]}}
+                                    </div>
+                                    <div class="col-sm-4">Priv Adj Rank: {{top_50_teams.loc[i, challenge + " - rank_score(private)"]}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {% endif %}
                         {% endfor %}
